@@ -5,6 +5,10 @@ EagleVision is an AI-powered pipeline designed to monitor and analyze constructi
 
 This project was built focusing on **System Architecture, Real-time Reliability, and Extensibility**. 
 
+## 🎬 Demo Video
+Check out the fully working pipeline demo (Screen Record) here: 
+**[EagleVision Pipeline Demo - Google Drive](https://drive.google.com/file/d/1W0GCxMXZgzH0NrMSUNdaA72Ze7pTOsQn/view?usp=sharing)**
+
 ## Features
 - **Object Detection & Tracking:** Uses YOLOv8s and ByteTrack for robust object tracking.
 - **Occlusion-Resistant Re-ID:** Implements both Visual Feature Extraction (Cosine Similarity) and Spatial Fallback to maintain equipment identity even if lost behind obstacles or dirt.
