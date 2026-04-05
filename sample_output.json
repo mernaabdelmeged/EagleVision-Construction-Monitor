@@ -1,0 +1,29 @@
+{
+  "frame_id": 120,
+  "equipment_id": "EQ-1",
+  "equipment_class": "heavy_equipment",
+  "timestamp": 4.0,
+  "is_reidentified": false,
+  "utilization": {
+    "current_state": "ACTIVE",
+    "current_activity": "DIGGING",
+    "motion_source": "arm_only"
+  },
+  "dwell_time": {
+    "current_session_idle_sec": 0.0,
+    "total_accumulated_idle_sec": 3.4,
+    "idle_sessions_count": 2
+  },
+  "time_analytics": {
+    "total_tracked_seconds": 4.0,
+    "utilization_percent": 15.0
+  },
+  "location": {
+    "bbox": [
+      230,
+      145,
+      500,
+      340
+    ]
+  }
+}

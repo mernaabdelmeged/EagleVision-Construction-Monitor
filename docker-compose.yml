@@ -1,0 +1,47 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.1
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    environment:
+      POSTGRES_USER: eaglevision
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: eaglevision_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db_service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  db-service:
+    image: python:3.10-slim
+    depends_on:
+      - kafka
+      - timescaledb
+    volumes:
+      - ./db_service:/app
+    working_dir: /app
+    command: >
+      sh -c "pip install kafka-python psycopg2-binary && python db_writer.py"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
