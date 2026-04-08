@@ -234,7 +234,12 @@ def main():
             current_fps = frame_idx / elapsed if elapsed > 0 else 0
             frames_left = total_frames - frame_idx
             eta_min = (frames_left / current_fps) / 60 if current_fps > 0 else 0
-            print(f"🚀 [SNAPSHOT] Streaming {len(system_snapshot)} machines | Speed: {current_fps:.1f} FPS | ETA: {eta_min:.1f} min remaining")
+            print(f"\n🚀 [SNAPSHOT] Frame {frame_idx}/{total_frames} | Speed: {current_fps:.1f} FPS | ETA: {eta_min:.1f} min")
+            
+            # Print the JSON Kafka Payload (visible in demo video)
+            for eq_event in system_snapshot.values():
+                print(json.dumps(eq_event, indent=2))
+            print("─" * 60)
         # -- Re-ID Maintenance --
         # Find tracks that disappeared in this frame
         active_track_ids = set(reid_module.active_gallery.keys())
